@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SLEEPKIDD STUDIO</title>
     
+    <!-- Подключаем сверхсовременный массивный шрифт Syncopate + строгий JetBrains Mono -->
     <link href="https://googleapis.com" rel="stylesheet">
     
     <style>
@@ -44,7 +45,19 @@
             pointer-events: none;
         }
 
-        /* Современный декор: технологичные неоновые углы по краям экрана */
+        /* НОВЫЙ ВИЗУАЛ: Тончайшие линии сканирования терминала */
+        body::after {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 999;
+            background-size: 100% 4px, 3px 100%;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
         .screen-corner {
             position: fixed;
             width: 16px;
@@ -103,36 +116,28 @@
             margin-bottom: 60px;
         }
 
-        /* ПОЛНАЯ СОЧЕТАЕМОСТЬ: Янтарно-золотой лазерный перелив для названия */
+        /* СТРОГИЙ БЕЛЫЙ ЗАГОЛОВОК + УЛУЧШЕННЫЙ ШРИФТ + ЧИСТЫЙ ГЛИТЧ */
         .main-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2rem, 4.5vw, 3.6rem);
-            font-weight: 900;
-            letter-spacing: clamp(4px, 1vw, 10px);
+            font-family: 'Syncopate', sans-serif;
+            font-size: clamp(1.6rem, 3.8vw, 3rem);
+            font-weight: 700;
+            letter-spacing: clamp(6px, 1.5vw, 14px);
             text-transform: uppercase;
-            background: linear-gradient(
-                90deg, 
-                #ffaa00 0%, 
-                #ffd580 30%, 
-                #ffffff 50%, 
-                #ffd580 70%, 
-                #ffaa00 100%
-            );
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: chromeLaser 5s linear infinite, TitleGlowPulse 3s infinite ease-in-out alternate;
+            color: var(--text-white);
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+            animation: whiteGlitch 4s step-end infinite;
         }
 
-        @keyframes chromeLaser {
-            0% { background-position: 200% center; letter-spacing: clamp(4px, 1vw, 6px); }
-            50% { letter-spacing: clamp(6px, 1.2vw, 10px); }
-            100% { background-position: -200% center; letter-spacing: clamp(4px, 1vw, 6px); }
-        }
-
-        @keyframes TitleGlowPulse {
-            0% { filter: drop-shadow(0 0 15px rgba(var(--accent-rgb), 0.2)); }
-            100% { filter: drop-shadow(0 0 35px rgba(var(--accent-rgb), 0.6)); }
+        /* Эффект строгого цифрового сбоя без переливания цветов */
+        @keyframes whiteGlitch {
+            0%, 92%, 100% { transform: skew(0deg); text-shadow: 0 0 15px rgba(255,255,255,0.1); }
+            93% { transform: skew(3deg) translateX(-2px); text-shadow: 2px 0 0 var(--text-darker), -2px 0 0 #fff; }
+            95% { transform: skew(-2deg) translateX(3px); clip-path: inset(20% 0 40% 0); }
+            96% { transform: skew(0deg); clip-path: none; }
+            97% { transform: translateX(-3px); text-shadow: -1px 0 0 var(--text-darker); }
+            99% { transform: skew(1deg); clip-path: inset(60% 0 10% 0); }
         }
 
         .subtitle-block {
@@ -182,6 +187,7 @@
                 <p class="random-text text-line-3">// создание цифровых решений для ваших задач</p>
             </div>
         </header>
+
         <!-- Трендовая Bento-сетка из 5 блоков -->
         <section class="grid-layout">
             
@@ -579,7 +585,7 @@
 
         cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
-                // Подсвечиваем углы экрана неоном при наведении на карточки
+                // Вспышка углов экрана неоном строго при наведении на Bento-блоки
                 corners.forEach(corner => {
                     corner.style.borderColor = 'rgba(var(--accent-rgb), 0.8)';
                     corner.style.filter = 'drop-shadow(0 0 8px rgba(var(--accent-rgb), 0.5))';
@@ -606,7 +612,7 @@
             card.addEventListener('mouseleave', () => {
                 card.style.transform = 'perspective(1200px) translateY(0) rotateX(0) rotateY(0)';
                 
-                // Возвращаем углы в обычное тусклое состояние
+                // Возврат декоративных прицелов в исходный приглушенный режим
                 corners.forEach(corner => {
                     corner.style.borderColor = 'rgba(var(--accent-rgb), 0.2)';
                     corner.style.filter = 'none';
