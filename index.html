@@ -1,10 +1,9 @@
-
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SLEEPKIDD STUDIO | Премиальная веб-разработка</title>
+    <title>SLEEPKIDD STUDIO</title>
     
     <link href="https://googleapis.com" rel="stylesheet">
     
@@ -44,6 +43,21 @@
             z-index: -1;
             pointer-events: none;
         }
+
+        /* Современный декор: технологичные неоновые углы по краям экрана */
+        .screen-corner {
+            position: fixed;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(var(--accent-rgb), 0.2);
+            z-index: 10;
+            pointer-events: none;
+            transition: border-color 0.3s;
+        }
+        .top-left { top: 20px; left: 20px; border-right: none; border-bottom: none; }
+        .top-right { top: 20px; right: 20px; border-left: none; border-bottom: none; }
+        .bottom-left { bottom: 20px; left: 20px; border-right: none; border-top: none; }
+        .bottom-right { bottom: 20px; right: 20px; border-left: none; border-top: none; }
 
         .plasma-glow {
             position: fixed;
@@ -89,18 +103,25 @@
             margin-bottom: 60px;
         }
 
-        /* Лазерно-хромированная бегущая анимация для названия */
+        /* ПОЛНАЯ СОЧЕТАЕМОСТЬ: Янтарно-золотой лазерный перелив для названия */
         .main-title {
             font-family: 'Orbitron', sans-serif;
             font-size: clamp(2rem, 4.5vw, 3.6rem);
             font-weight: 900;
             letter-spacing: clamp(4px, 1vw, 10px);
             text-transform: uppercase;
-            background: linear-gradient(90deg, #fff 0%, #fff 35%, var(--accent-amber) 50%, #fff 65%, #fff 100%);
+            background: linear-gradient(
+                90deg, 
+                #ffaa00 0%, 
+                #ffd580 30%, 
+                #ffffff 50%, 
+                #ffd580 70%, 
+                #ffaa00 100%
+            );
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: chromeLaser 6s linear infinite, TitleGlowPulse 3s infinite ease-in-out alternate;
+            animation: chromeLaser 5s linear infinite, TitleGlowPulse 3s infinite ease-in-out alternate;
         }
 
         @keyframes chromeLaser {
@@ -110,8 +131,8 @@
         }
 
         @keyframes TitleGlowPulse {
-            0% { filter: drop-shadow(0 0 10px rgba(var(--accent-rgb), 0.15)); }
-            100% { filter: drop-shadow(0 0 30px rgba(var(--accent-rgb), 0.5)); }
+            0% { filter: drop-shadow(0 0 15px rgba(var(--accent-rgb), 0.2)); }
+            100% { filter: drop-shadow(0 0 35px rgba(var(--accent-rgb), 0.6)); }
         }
 
         .subtitle-block {
@@ -143,6 +164,12 @@
 <body>
 
     <canvas id="fx-canvas"></canvas>
+    <!-- Угловые элементы визуала -->
+    <div class="screen-corner top-left"></div>
+    <div class="screen-corner top-right"></div>
+    <div class="screen-corner bottom-left"></div>
+    <div class="screen-corner bottom-right"></div>
+    
     <div class="plasma-glow"></div>
     <div class="plasma-glow-2"></div>
 
@@ -546,12 +573,19 @@
         animate();
 
 
-        // --- ЭФФЕКТ 2: Интерактивный 3D-наклон и трекинг бликов на стекле ---
+        // --- ЭФФЕКТ 2: Интерактивный 3D-наклон, блики и подсветка углов экрана ---
         const cards = document.querySelectorAll('.interactive-card');
+        const corners = document.querySelectorAll('.screen-corner');
 
         cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
-                if (window.innerWidth <= 850) return; // Отключаем 3D на телефонах для оптимизации
+                // Подсвечиваем углы экрана неоном при наведении на карточки
+                corners.forEach(corner => {
+                    corner.style.borderColor = 'rgba(var(--accent-rgb), 0.8)';
+                    corner.style.filter = 'drop-shadow(0 0 8px rgba(var(--accent-rgb), 0.5))';
+                });
+
+                if (window.innerWidth <= 850) return; 
                 
                 const rect = card.getBoundingClientRect();
                 const mouseX = e.clientX - rect.left;
@@ -571,6 +605,12 @@
 
             card.addEventListener('mouseleave', () => {
                 card.style.transform = 'perspective(1200px) translateY(0) rotateX(0) rotateY(0)';
+                
+                // Возвращаем углы в обычное тусклое состояние
+                corners.forEach(corner => {
+                    corner.style.borderColor = 'rgba(var(--accent-rgb), 0.2)';
+                    corner.style.filter = 'none';
+                });
             });
         });
     </script>
