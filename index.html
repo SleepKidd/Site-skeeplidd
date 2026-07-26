@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная страница</title>
+    <!-- Подключаем футуристичный шрифт -->
+    <link href="https://googleapis.com" rel="stylesheet">
+    
+    <style>
+        /* Базовые настройки и переменные */
+        :root {
+            --bg-color: #0a0a0c;
+            --grid-color: rgba(255, 255, 255, 0.03);
+            --accent-glow: #ffaa00;
+            --text-main: #ffffff;
+            --text-muted: #88888e;
+            --card-bg: rgba(20, 20, 25, 0.6);
+            --card-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Анимированный фоновый паттерн в точку */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            background-image: radial-gradient(var(--grid-color) 1px, transparent 1px);
+            background-size: 24px 24px;
+            z-index: -1;
+            animation: backgroundPan 40s linear infinite;
+        }
+
+        @keyframes backgroundPan {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-50%, -50%); }
+        }
+
+        /* Размытые неоновые сферы на фоне для глубины */
+        .bg-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 170, 0, 0.05) 0%, transparent 70%);
+            top: -10%;
+            left: -10%;
+            z-index: -1;
+            filter: blur(80px);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow"></div>
+    <div class="bg-glow"></div>
+
+    <!-- Основной контейнер сайта -->
+    <main class="container">
+        
+        <!-- Шапка: Название и рандомный текст -->
+        <header class="main-header">
+            <h1 class="main-title" data-text="НАЗВАНИЕ">НАЗВАНИЕ</h1>
+            <div class="subtitle-block">
+                <p class="random-text text-line-1">рандомныйтекст</p>
+                <p class="random-text text-line-2">рандомный текст</p>
+                <p class="random-text text-line-3">рандомный текст</p>
+            </div>
+        </header>
+
+        <!-- Сетка для 4 интерактивных блоков -->
+        <section class="grid-layout">
+            <!-- Блоки будут добавлены в Части 3 -->
+        </section>
+
+    </main>
+
+    <!-- Стили для Части 2 -->
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            position: relative;
+        }
+
+        /* Стили заголовка с неоновым эффектом */
+        .main-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .main-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #fff;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 0 20px rgba(255, 170, 0, 0.2);
+            animation: pulseGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { text-shadow: 0 0 10px rgba(255, 170, 0, 0.2); }
+            100% { text-shadow: 0 0 30px rgba(255, 170, 0, 0.6), 0 0 50px rgba(255, 170, 0, 0.3); }
+        }
+
+        /* Рандомный текст под заголовком */
+        .subtitle-block {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .random-text {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: lowercase;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        /* Поочередное появление строчек текста */
+        .text-line-1 { animation-delay: 0.3s; }
+        .text-line-2 { animation-delay: 0.6s; }
+        .text-line-3 { animation-delay: 0.9s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Контейнер для 4 блоков из наброска */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Планшетная и мобильная адаптивность */
+        @media (max-width: 768px) {
+            .main-title { font-size: 2.5rem; }
+            .grid-layout { grid-template-columns: 1fr; gap: 25px; }
+        }
+    </style>
+            <!-- Блок 1 -->
+            <a href="page1.html" class="interactive-card">
+                <div class="card-glow"></div>
+                <div class="card-content">
+                    <div class="icon-wrapper">
+                        <span class="pulse-icon">⚡</span>
+                    </div>
+                    <div class="text-wrapper">
+                        <h2 class="card-title">Текст 1</h2>
+                        <p class="card-desc">Перейти в первый раздел</p>
+                    </div>
+                </div>
+                <div class="card-border-line"></div>
+            </a>
+
+            <!-- Блок 2 -->
+            <a href="page2.html" class="interactive-card">
+                <div class="card-glow"></div>
+                <div class="card-content">
+                    <div class="icon-wrapper">
+                        <span class="pulse-icon">✨</span>
+                    </div>
+                    <div class="text-wrapper">
+                        <h2 class="card-title">Текст 2</h2>
+                        <p class="card-desc">Перейти во второй раздел</p>
+                    </div>
+                </div>
+                <div class="card-border-line"></div>
+            </a>
+
+            <!-- Блок 3 -->
+            <a href="page3.html" class="interactive-card">
+                <div class="card-glow"></div>
+                <div class="card-content">
+                    <div class="icon-wrapper">
+                        <span class="pulse-icon">🔮</span>
+                    </div>
+                    <div class="text-wrapper">
+                        <h2 class="card-title">Текст 3</h2>
+                        <p class="card-desc">Перейти в третий раздел</p>
+                    </div>
+                </div>
+                <div class="card-border-line"></div>
+            </a>
+
+            <!-- Блок 4 -->
+            <a href="page4.html" class="interactive-card">
+                <div class="card-glow"></div>
+                <div class="card-content">
+                    <div class="icon-wrapper">
+                        <span class="pulse-icon">🔥</span>
+                    </div>
+                    <div class="text-wrapper">
+                        <h2 class="card-title">Текст 4</h2>
+                        <p class="card-desc">Перейти в четвертый раздел</p>
+                    </div>
+                </div>
+                <div class="card-border-line"></div>
+            </a>
+        /* Стили интерактивных карточек */
+        .interactive-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                        border-color 0.4s ease, 
+                        box-shadow 0.4s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        /* Эффект при наведении на карточку */
+        .interactive-card:hover {
+            border-color: rgba(255, 170, 0, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 
+                        0 0 30px rgba(255, 170, 0, 0.1);
+            transform: translateY(-5px) scale(1.02);
+        }
+
+        .card-content {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            z-index: 2;
+            transform: translateZ(30px); /* 3D подъем контента */
+        }
+
+        /* Кастомная неоновая иконка (как желтые элементы на макете) */
+        .icon-wrapper {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 170, 0, 0.05);
+            border: 1px solid rgba(255, 170, 0, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            position: relative;
+            box-shadow: inset 0 0 15px rgba(255, 170, 0, 0.05);
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        .interactive-card:hover .icon-wrapper {
+            background: rgba(255, 170, 0, 0.15);
+            border-color: var(--accent-glow);
+            animation: iconFloat 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes iconFloat {
+            0% { transform: translateY(0); filter: drop-shadow(0 0 2px var(--accent-glow)); }
+            100% { transform: translateY(-4px); filter: drop-shadow(0 0 12px var(--accent-glow)); }
+        }
+
+        /* Текстовая часть карточки */
+        .text-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .card-title {
+            color: var(--text-main);
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .interactive-card:hover .card-title {
+            color: var(--accent-glow);
+        }
+
+        .card-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 300;
+        }
+
+        /* Бегущий световой блик по краю при наведении */
+        .card-border-line {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 170, 0, 0.1), transparent);
+            transform: skewX(-25deg);
+            z-index: 1;
+            transition: 0.7s;
+        }
+
+        .interactive-card:hover .card-border-line {
+            left: 150%;
+        }
+    <!-- Подпись автора на основе вашего макета -->
+    <footer class="main-footer">
+        <div class="creator-tag">creator: <span class="highlight">TG sleepkidd</span></div>
+        <div class="bottom-label">иконки</div>
+    </footer>
+
+    <!-- Стили для подписи -->
+    <style>
+        .main-footer {
+            text-align: center;
+            margin-top: 80px;
+            padding-bottom: 40px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .creator-tag {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            letter-spacing: 3px;
+            text-transform: lowercase;
+            margin-bottom: 8px;
+        }
+
+        .creator-tag .highlight {
+            color: var(--accent-glow);
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(255, 170, 0, 0.3);
+        }
+
+        .bottom-label {
+            font-size: 1.1rem;
+            color: var(--text-main);
+            letter-spacing: 6px;
+            text-transform: lowercase;
+            opacity: 0.7;
+        }
+    </style>
+
+    <!-- Скрипт для продвинутого 3D-эффекта наклона карточек за мышкой -->
+    <script>
+        const cards = document.querySelectorAll('.interactive-card');
+
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                
+                // Вычисляем координаты курсора относительно центра карточки
+                const x = e.clientX - rect.left - (rect.width / 2);
+                const y = e.clientY - rect.top - (rect.height / 2);
+                
+                // Переводим в градусы наклона (деление регулирует плавность/угол)
+                const degX = (y / (rect.height / 2)) * -10; 
+                const degY = (x / (rect.width / 2)) * 10;
+
+                card.style.transform = `translateY(-5px) scale(1.02) rotateX(${degX}deg) rotateY(${degY}deg)`;
+            });
+
+            // Возвращаем карточку в исходное положение, когда мышь уходит
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1) rotateX(0) rotateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
