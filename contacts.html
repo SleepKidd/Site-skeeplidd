@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>СВЯЗЬ / ЗАКАЗ | SLEEPKIDD STUDIO</title>
     
-    <!-- Фирменный массивный шрифт Syncopate + строгий JetBrains Mono -->
     <link href="https://googleapis.com" rel="stylesheet">
     
     <style>
@@ -14,8 +13,8 @@
             --accent-amber: #ffaa00;
             --accent-rgb: 255, 170, 0;
             --text-white: #ffffff;
-            --text-darker: #555562;
-            --glass-core: rgba(6, 6, 10, 0.75);
+            --text-darker: #7c7c8c;
+            --glass-core: rgba(4, 4, 7, 0.88); /* Плотное стекло для яркого текста */
             --border-glow: rgba(255, 170, 0, 0.12);
         }
 
@@ -41,14 +40,13 @@
             z-index: -1; pointer-events: none;
         }
 
-        /* СОХРАНЯЕМ ТРЕНД: Плотная 3D-сетка сканирования терминала */
+        /* Плотная 3D-сетка сканирования */
         body::after {
             content: " ";
             display: block;
             position: fixed;
             top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%), 
-                        linear-gradient(90deg, rgba(255, 170, 0, 0.04), rgba(0, 0, 0, 0.2));
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%), linear-gradient(90deg, rgba(255, 170, 0, 0.04), rgba(0, 0, 0, 0.2));
             z-index: 999;
             background-size: 100% 3px, 3px 100%;
             pointer-events: none; opacity: 0.45;
@@ -56,18 +54,16 @@
 
         @media (min-width: 851px) {
             body::after {
-                background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.5) 50%), 
-                            linear-gradient(90deg, rgba(255, 170, 0, 0.03), rgba(0, 0, 0, 0.3));
+                background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.5) 50%), linear-gradient(90deg, rgba(255, 170, 0, 0.03), rgba(0, 0, 0, 0.3));
                 background-size: 100% 1.5px, 1.5px 100%;
                 opacity: 0.55;
             }
         }
 
-        /* Интерактивные углы-прицелы по краям */
         .screen-corner {
             position: fixed; width: 16px; height: 16px;
             border: 2px solid rgba(var(--accent-rgb), 0.2);
-            z-index: 10; pointer-events: none; transition: border-color 0.3s, filter 0.3s;
+            z-index: 10; pointer-events: none; transition: border-color 0.3s;
         }
         .top-left { top: 20px; left: 20px; border-right: none; border-bottom: none; }
         .top-right { top: 20px; right: 20px; border-left: none; border-bottom: none; }
@@ -87,14 +83,14 @@
         }
 
         .container {
-            max-width: 850px; /* Идеальная ширина для вертикального контента */
+            max-width: 850px;
             width: 100%; margin: 0 auto; padding: 8vh 24px; position: relative;
         }
     </style>
     <style>
         .main-header { text-align: center; margin-bottom: 60px; }
 
-        /* Фирменный белый глитч-заголовок без радужного переливания */
+        /* Белый глитч-заголовок, как на главной */
         .main-title {
             font-family: 'Syncopate', sans-serif;
             font-size: clamp(1.4rem, 3.5vw, 2.6rem);
@@ -300,7 +296,9 @@
             color: var(--accent-amber); text-shadow: 0 0 15px rgba(var(--accent-rgb), 0.3);
         }
         
-        .card-desc { color: #8c8c9e; font-size: clamp(0.8rem, 1.2vw, 0.88rem); line-height: 1.45; }
+        /* ПОВЫШЕННЫЙ КОНТРАСТ: Белый чистый текст для контактов */
+        .card-desc { color: #e2e2eb; font-size: clamp(0.8rem, 1.2vw, 0.88rem); line-height: 1.45; font-weight: 400; transition: color 0.3s ease; }
+        .interactive-card:hover .card-desc { color: rgba(255, 255, 255, 1); }
 
         /* Футуристичная кнопка возврата назад */
         .back-btn-card {
@@ -339,37 +337,7 @@
             .interactive-card:active { background: rgba(var(--accent-rgb), 0.05); border-color: rgba(var(--accent-rgb), 0.4); }
         }
     </style>
-    <!-- Подпись автора -->
-    <footer class="main-footer">
-        <div class="creator-tag">creator: <span class="highlight">TG sleepkidd</span></div>
-    </footer>
-
-    <!-- Стили для футера -->
-    <style>
-        .main-footer {
-            text-align: center;
-            padding: 60px 24px 40px;
-            font-family: 'Orbitron', sans-serif;
-            background: linear-gradient(to top, #020204 50%, transparent);
-            position: relative;
-            z-index: 5;
-        }
-
-        .creator-tag {
-            font-size: 0.85rem;
-            color: var(--text-darker);
-            letter-spacing: 4px;
-            text-transform: lowercase;
-        }
-
-        .creator-tag .highlight {
-            color: var(--accent-amber);
-            font-weight: 700;
-            text-shadow: 0 0 15px rgba(var(--accent-rgb), 0.5);
-        }
-    </style>
-
-    <!-- Скрипты спецэффектов -->
+    <!-- Скрипты спецэффектов фона, углов и 3D-движка -->
     <script>
         // --- ЭФФЕКТ 1: Сверхтехнологичная матрица частиц на Canvas ---
         const canvas = document.getElementById('fx-canvas');
@@ -387,13 +355,11 @@
         resizeCanvas();
 
         window.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
+            mouse.x = e.clientX; mouse.y = e.clientY;
         });
 
         window.addEventListener('mouseout', () => {
-            mouse.x = null;
-            mouse.y = null;
+            mouse.x = null; mouse.y = null;
         });
 
         class Particle {
@@ -406,41 +372,33 @@
             }
 
             update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
+                this.x += this.speedX; this.y += this.speedY;
 
                 if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
                 if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
 
                 if (mouse.x != null && mouse.y != null) {
-                    let dx = mouse.x - this.x;
-                    let dy = mouse.y - this.y;
+                    let dx = mouse.x - this.x; let dy = mouse.y - this.y;
                     let distance = Math.hypot(dx, dy);
                     
                     if (distance < mouse.radius) {
                         let force = (mouse.radius - distance) / mouse.radius;
-                        let directionX = dx / distance;
-                        let directionY = dy / distance;
+                        let directionX = dx / distance; let directionY = dy / distance;
                         
-                        this.x -= directionX * force * 3;
-                        this.y -= directionY * force * 3;
+                        this.x -= directionX * force * 3; this.y -= directionY * force * 3;
                     }
                 }
             }
 
             draw() {
                 ctx.fillStyle = 'rgba(255, 170, 0, 0.4)';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
             }
         }
 
         function initParticles() {
             particlesArray = [];
-            for (let i = 0; i < maxParticles; i++) {
-                particlesArray.push(new Particle());
-            }
+            for (let i = 0; i < maxParticles; i++) { particlesArray.push(new Particle()); }
         }
         initParticles();
 
@@ -453,12 +411,9 @@
 
                     if (distance < 110) {
                         let opacity = (1 - (distance / 110)) * 0.12;
-                        ctx.strokeStyle = `rgba(255, 170, 0, ${opacity})`;
-                        ctx.lineWidth = 1;
-                        ctx.beginPath();
-                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-                        ctx.stroke();
+                        ctx.strokeStyle = `rgba(255, 170, 0, ${opacity})`; ctx.lineWidth = 1;
+                        ctx.beginPath(); ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y); ctx.stroke();
                     }
                 }
             }
@@ -467,11 +422,9 @@
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-                particlesArray[i].draw();
+                particlesArray[i].update(); particlesArray[i].draw();
             }
-            connectParticles();
-            requestAnimationFrame(animate);
+            connectParticles(); requestAnimationFrame(animate);
         }
         animate();
 
@@ -482,7 +435,6 @@
 
         cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
-                // Вспышка углов экрана при наведении на карточки связи
                 corners.forEach(corner => {
                     corner.style.borderColor = 'rgba(var(--accent-rgb), 0.8)';
                     corner.style.filter = 'drop-shadow(0 0 8px rgba(var(--accent-rgb), 0.5))';
@@ -491,17 +443,13 @@
                 if (window.innerWidth <= 850) return; 
                 
                 const rect = card.getBoundingClientRect();
-                const mouseX = e.clientX - rect.left;
-                const mouseY = e.clientY - rect.top;
+                const mouseX = e.clientX - rect.left; const mouseY = e.clientY - rect.top;
                 
-                card.style.setProperty('--mouse-x', `${mouseX}px`);
-                card.style.setProperty('--mouse-y', `${mouseY}px`);
+                card.style.setProperty('--mouse-x', `${mouseX}px`); card.style.setProperty('--mouse-y', `${mouseY}px`);
 
-                const x = mouseX - (rect.width / 2);
-                const y = mouseY - (rect.height / 2);
+                const x = mouseX - (rect.width / 2); const y = mouseY - (rect.height / 2);
                 
-                const degX = (y / (rect.height / 2)) * -6; 
-                const degY = (x / (rect.width / 2)) * 6;
+                const degX = (y / (rect.height / 2)) * -6; const degY = (x / (rect.width / 2)) * 6;
 
                 card.style.transform = `perspective(1200px) translateY(-4px) rotateX(${degX}deg) rotateY(${degY}deg)`;
             });
@@ -509,10 +457,8 @@
             card.addEventListener('mouseleave', () => {
                 card.style.transform = 'perspective(1200px) translateY(0) rotateX(0) rotateY(0)';
                 
-                // Возврат декоративных прицелов в исходное приглушенные состояние
                 corners.forEach(corner => {
-                    corner.style.borderColor = 'rgba(var(--accent-rgb), 0.2)';
-                    corner.style.filter = 'none';
+                    corner.style.borderColor = 'rgba(var(--accent-rgb), 0.2)'; corner.style.filter = 'none';
                 });
             });
         });
