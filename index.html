@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SLEEPKIDD STUDIO</title>
+    <title>SLEEPKIDD STUDIO | Премиальная веб-разработка</title>
     
-    <!-- Подключаем сверхсовременный массивный шрифт Syncopate + строгий JetBrains Mono -->
     <link href="https://googleapis.com" rel="stylesheet">
     
     <style>
@@ -14,8 +13,8 @@
             --accent-amber: #ffaa00;
             --accent-rgb: 255, 170, 0;
             --text-white: #ffffff;
-            --text-darker: #555562;
-            --glass-core: rgba(6, 6, 10, 0.75);
+            --text-darker: #7c7c8c; /* Увеличили яркость мелкого текста в шапке */
+            --glass-core: rgba(4, 4, 7, 0.88); /* Сделали стекло более плотным для читаемости */
             --border-glow: rgba(255, 170, 0, 0.12);
         }
 
@@ -45,17 +44,24 @@
             pointer-events: none;
         }
 
-        /* НОВЫЙ ВИЗУАЛ: Тончайшие линии сканирования терминала */
         body::after {
             content: " ";
             display: block;
             position: fixed;
             top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%), linear-gradient(90deg, rgba(255, 170, 0, 0.04), rgba(0, 0, 0, 0.2));
             z-index: 999;
-            background-size: 100% 4px, 3px 100%;
+            background-size: 100% 3px, 3px 100%;
             pointer-events: none;
-            opacity: 0.4;
+            opacity: 0.45;
+        }
+
+        @media (min-width: 851px) {
+            body::after {
+                background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.5) 50%), linear-gradient(90deg, rgba(255, 170, 0, 0.03), rgba(0, 0, 0, 0.3));
+                background-size: 100% 1.5px, 1.5px 100%;
+                opacity: 0.55;
+            }
         }
 
         .screen-corner {
@@ -116,7 +122,6 @@
             margin-bottom: 60px;
         }
 
-        /* СТРОГИЙ БЕЛЫЙ ЗАГОЛОВОК + УЛУЧШЕННЫЙ ШРИФТ + ЧИСТЫЙ ГЛИТЧ */
         .main-title {
             font-family: 'Syncopate', sans-serif;
             font-size: clamp(1.6rem, 3.8vw, 3rem);
@@ -130,7 +135,6 @@
             animation: whiteGlitch 4s step-end infinite;
         }
 
-        /* Эффект строгого цифрового сбоя без переливания цветов */
         @keyframes whiteGlitch {
             0%, 92%, 100% { transform: skew(0deg); text-shadow: 0 0 15px rgba(255,255,255,0.1); }
             93% { transform: skew(3deg) translateX(-2px); text-shadow: 2px 0 0 var(--text-darker), -2px 0 0 #fff; }
@@ -182,7 +186,7 @@
         <header class="main-header">
             <h1 class="main-title">SLEEPKIDD STUDIO</h1>
             <div class="subtitle-block">
-                <p class="random-text text-line-1">// разработка  сайтов и веб-сервисов</p>
+                <p class="random-text text-line-1">// разработка премиальных сайтов и веб-сервисов</p>
                 <p class="random-text text-line-2">// индивидуальный код • адаптивный 3D дизайн</p>
                 <p class="random-text text-line-3">// создание цифровых решений для ваших задач</p>
             </div>
@@ -191,7 +195,7 @@
         <!-- Трендовая Bento-сетка из 5 блоков -->
         <section class="grid-layout">
             
-            <!-- Блок 1: Портфолио -->
+            <!-- Блок 1: ... -->
             <a href="portfolio.html" class="interactive-card">
                 <div class="laser-line"></div>
                 <div class="card-shine"></div>
@@ -312,30 +316,19 @@
 
         .card-shine {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle 200px at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(var(--accent-rgb), 0.18), transparent 80%);
-            z-index: 1;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            z-index: 1; pointer-events: none; opacity: 0; transition: opacity 0.3s ease;
         }
 
         .laser-line {
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 40%;
-            height: 100%;
+            top: 0; left: -100%; width: 40%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb), 0.15), transparent);
-            transform: skewX(-20deg);
-            z-index: 1;
+            transform: skewX(-20deg); z-index: 1;
         }
 
         .interactive-card:hover .card-shine { opacity: 1; }
-
         .interactive-card:hover .laser-line {
             left: 160%;
             transition: left 0.8s cubic-bezier(0.25, 1, 0.5, 1);
@@ -345,49 +338,31 @@
             display: flex;
             align-items: center;
             gap: clamp(20px, 2.5vw, 30px);
-            z-index: 2;
-            transform: translateZ(50px);
-            width: 100%;
+            z-index: 2; transform: translateZ(50px); width: 100%;
         }
 
         .icon-wrapper {
-            width: clamp(54px, 6vw, 70px);
-            height: clamp(54px, 6vw, 70px);
-            background: rgba(255, 170, 0, 0.02);
-            border: 1px solid rgba(255, 170, 0, 0.12);
+            width: clamp(54px, 6vw, 70px); height: clamp(54px, 6vw, 70px);
+            background: rgba(170, 170, 170, 0.02); border: 1px solid rgba(255, 170, 0, 0.12);
             border-radius: clamp(12px, 1.5vw, 18px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            position: relative;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+            position: relative; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .wide-icon {
-            background: rgba(var(--accent-rgb), 0.05);
-            border-color: rgba(var(--accent-rgb), 0.3);
+            background: rgba(var(--accent-rgb), 0.05); border-color: rgba(var(--accent-rgb), 0.3);
         }
 
-        .icon-glyph {
-            font-size: clamp(1.4rem, 2vw, 1.8rem);
-            transition: transform 0.4s ease;
-        }
+        .icon-glyph { font-size: clamp(1.4rem, 2vw, 1.8rem); transition: transform 0.4s ease; }
 
         .pulse-dot {
-            position: absolute;
-            top: clamp(4px, 0.8vw, 8px);
-            right: clamp(4px, 0.8vw, 8px);
-            width: 6px;
-            height: 6px;
-            background-color: var(--accent-amber);
-            border-radius: 50%;
-            box-shadow: 0 0 8px var(--accent-amber);
+            position: absolute; top: clamp(4px, 0.8vw, 8px); right: clamp(4px, 0.8vw, 8px);
+            width: 6px; height: 6px; background-color: var(--accent-amber);
+            border-radius: 50%; box-shadow: 0 0 8px var(--accent-amber);
         }
 
         .radar-glow {
-            width: 8px;
-            height: 8px;
+            width: 8px; height: 8px;
             animation: radarPulse 2s infinite ease-in-out;
         }
 
@@ -398,42 +373,29 @@
         }
 
         .interactive-card:hover .icon-wrapper {
-            background: rgba(var(--accent-rgb), 0.15);
-            border-color: var(--accent-amber);
+            background: rgba(var(--accent-rgb), 0.15); border-color: var(--accent-amber);
             box-shadow: 0 0 25px rgba(var(--accent-rgb), 0.4);
         }
 
         .interactive-card:hover .icon-glyph { transform: scale(1.1) rotate(-5deg); }
-
-        .text-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
+        .text-wrapper { display: flex; flex-direction: column; gap: 6px; }
 
         .card-title {
-            color: var(--text-white);
-            font-size: clamp(1.1rem, 1.8vw, 1.4rem);
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            font-family: 'Orbitron', sans-serif;
+            color: var(--text-white); font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+            font-weight: 700; letter-spacing: 1.5px; font-family: 'Orbitron', sans-serif;
             transition: color 0.3s ease;
         }
 
         .interactive-card:hover .card-title {
-            color: var(--accent-amber);
-            text-shadow: 0 0 15px rgba(var(--accent-rgb), 0.3);
+            color: var(--accent-amber); text-shadow: 0 0 15px rgba(var(--accent-rgb), 0.3);
         }
 
+        /* МАКСИМАЛЬНЫЙ КОНТРАСТ: Белый чистый цвет для ПК */
         .card-desc {
-            color: #8c8c9e;
-            font-size: clamp(0.8rem, 1.2vw, 0.88rem);
-            line-height: 1.45;
-            font-weight: 400;
-            transition: color 0.3s ease;
+            color: #e2e2eb; font-size: clamp(0.8rem, 1.2vw, 0.88rem); line-height: 1.45; font-weight: 400; transition: color 0.3s ease;
         }
 
-        .interactive-card:hover .card-desc { color: rgba(255, 255, 255, 0.85); }
+        .interactive-card:hover .card-desc { color: rgba(255, 255, 255, 1); }
 
         @media (max-width: 850px) {
             .grid-layout { grid-template-columns: 1fr; gap: 20px; }
@@ -442,39 +404,8 @@
             .interactive-card:active { background: rgba(var(--accent-rgb), 0.05); border-color: rgba(var(--accent-rgb), 0.4); }
         }
     </style>
-    <!-- Футер с подписью автора -->
-    <footer class="main-footer">
-        <div class="creator-tag">creator: <span class="highlight">TG sleepkidd</span></div>
-    </footer>
-
-    <!-- Стили для футера -->
-    <style>
-        .main-footer {
-            text-align: center;
-            padding: 60px 24px 40px;
-            font-family: 'Orbitron', sans-serif;
-            background: linear-gradient(to top, #020204 50%, transparent);
-            position: relative;
-            z-index: 5;
-        }
-
-        .creator-tag {
-            font-size: 0.85rem;
-            color: var(--text-darker);
-            letter-spacing: 4px;
-            text-transform: lowercase;
-        }
-
-        .creator-tag .highlight {
-            color: var(--accent-amber);
-            font-weight: 700;
-            text-shadow: 0 0 15px rgba(var(--accent-rgb), 0.5);
-        }
-    </style>
-
-    <!-- Скрипты спецэффектов -->
+    <!-- Скрипты спецэффектов фона, углов и 3D-движка -->
     <script>
-        // --- ЭФФЕКТ 1: Сверхтехнологичная матрица частиц на Canvas ---
         const canvas = document.getElementById('fx-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -490,13 +421,11 @@
         resizeCanvas();
 
         window.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
+            mouse.x = e.clientX; mouse.y = e.clientY;
         });
 
         window.addEventListener('mouseout', () => {
-            mouse.x = null;
-            mouse.y = null;
+            mouse.x = null; mouse.y = null;
         });
 
         class Particle {
@@ -509,41 +438,30 @@
             }
 
             update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-
+                this.x += this.speedX; this.y += this.speedY;
                 if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
                 if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
 
                 if (mouse.x != null && mouse.y != null) {
-                    let dx = mouse.x - this.x;
-                    let dy = mouse.y - this.y;
+                    let dx = mouse.x - this.x; let dy = mouse.y - this.y;
                     let distance = Math.hypot(dx, dy);
-                    
                     if (distance < mouse.radius) {
                         let force = (mouse.radius - distance) / mouse.radius;
-                        let directionX = dx / distance;
-                        let directionY = dy / distance;
-                        
-                        this.x -= directionX * force * 3;
-                        this.y -= directionY * force * 3;
+                        let directionX = dx / distance; let directionY = dy / distance;
+                        this.x -= directionX * force * 3; this.y -= directionY * force * 3;
                     }
                 }
             }
 
             draw() {
                 ctx.fillStyle = 'rgba(255, 170, 0, 0.4)';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
             }
         }
 
         function initParticles() {
             particlesArray = [];
-            for (let i = 0; i < maxParticles; i++) {
-                particlesArray.push(new Particle());
-            }
+            for (let i = 0; i < maxParticles; i++) { particlesArray.push(new Particle()); }
         }
         initParticles();
 
@@ -553,15 +471,11 @@
                     let dx = particlesArray[a].x - particlesArray[b].x;
                     let dy = particlesArray[a].y - particlesArray[b].y;
                     let distance = Math.hypot(dx, dy);
-
                     if (distance < 110) {
                         let opacity = (1 - (distance / 110)) * 0.12;
-                        ctx.strokeStyle = `rgba(255, 170, 0, ${opacity})`;
-                        ctx.lineWidth = 1;
-                        ctx.beginPath();
-                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-                        ctx.stroke();
+                        ctx.strokeStyle = `rgba(255, 170, 0, ${opacity})`; ctx.lineWidth = 1;
+                        ctx.beginPath(); ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y); ctx.stroke();
                     }
                 }
             }
@@ -570,52 +484,35 @@
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-                particlesArray[i].draw();
+                particlesArray[i].update(); particlesArray[i].draw();
             }
-            connectParticles();
-            requestAnimationFrame(animate);
+            connectParticles(); requestAnimationFrame(animate);
         }
         animate();
 
-
-        // --- ЭФФЕКТ 2: Интерактивный 3D-наклон, блики и подсветка углов экрана ---
         const cards = document.querySelectorAll('.interactive-card');
         const corners = document.querySelectorAll('.screen-corner');
 
         cards.forEach(card => {
             card.addEventListener('mousemove', (e) => {
-                // Вспышка углов экрана неоном строго при наведении на Bento-блоки
                 corners.forEach(corner => {
                     corner.style.borderColor = 'rgba(var(--accent-rgb), 0.8)';
                     corner.style.filter = 'drop-shadow(0 0 8px rgba(var(--accent-rgb), 0.5))';
                 });
 
                 if (window.innerWidth <= 850) return; 
-                
                 const rect = card.getBoundingClientRect();
-                const mouseX = e.clientX - rect.left;
-                const mouseY = e.clientY - rect.top;
-                
-                card.style.setProperty('--mouse-x', `${mouseX}px`);
-                card.style.setProperty('--mouse-y', `${mouseY}px`);
-
-                const x = mouseX - (rect.width / 2);
-                const y = mouseY - (rect.height / 2);
-                
-                const degX = (y / (rect.height / 2)) * -7; 
-                const degY = (x / (rect.width / 2)) * 7;
-
+                const mouseX = e.clientX - rect.left; const mouseY = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${mouseX}px`); card.style.setProperty('--mouse-y', `${mouseY}px`);
+                const x = mouseX - (rect.width / 2); const y = mouseY - (rect.height / 2);
+                const degX = (y / (rect.height / 2)) * -7; const degY = (x / (rect.width / 2)) * 7;
                 card.style.transform = `perspective(1200px) translateY(-5px) rotateX(${degX}deg) rotateY(${degY}deg)`;
             });
 
             card.addEventListener('mouseleave', () => {
                 card.style.transform = 'perspective(1200px) translateY(0) rotateX(0) rotateY(0)';
-                
-                // Возврат декоративных прицелов в исходный приглушенный режим
                 corners.forEach(corner => {
-                    corner.style.borderColor = 'rgba(var(--accent-rgb), 0.2)';
-                    corner.style.filter = 'none';
+                    corner.style.borderColor = 'rgba(var(--accent-rgb), 0.2)'; corner.style.filter = 'none';
                 });
             });
         });
