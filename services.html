@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>УСЛУГИ | SLEEPKIDD STUDIO</title>
+    
+    <!-- Фирменный массивный шрифт Syncopate + строгий JetBrains Mono -->
+    <link href="https://googleapis.com" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-main: #020204;
+            --accent-amber: #ffaa00;
+            --accent-rgb: 255, 170, 0;
+            --text-white: #ffffff;
+            --text-darker: #7c7c8c;
+            --glass-core: rgba(4, 4, 7, 0.88); /* Плотное стекло для яркого текста */
+            --border-glow: rgba(255, 170, 0, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-white);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        #fx-canvas {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none;
+        }
+
+        /* Наша плотная 3D-сетка сканирования терминала */
+        body::after {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%), linear-gradient(90deg, rgba(255, 170, 0, 0.04), rgba(0, 0, 0, 0.2));
+            z-index: 999;
+            background-size: 100% 3px, 3px 100%;
+            pointer-events: none; opacity: 0.45;
+        }
+
+        @media (min-width: 851px) {
+            body::after {
+                background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.5) 50%), linear-gradient(90deg, rgba(255, 170, 0, 0.03), rgba(0, 0, 0, 0.3));
+                background-size: 100% 1.5px, 1.5px 100%;
+                opacity: 0.55;
+            }
+        }
+
+        /* Интерактивные углы-прицелы по краям экрана */
+        .screen-corner {
+            position: fixed; width: 16px; height: 16px;
+            border: 2px solid rgba(var(--accent-rgb), 0.2);
+            z-index: 10; pointer-events: none; transition: border-color 0.3s, filter 0.3s;
+        }
+        .top-left { top: 20px; left: 20px; border-right: none; border-bottom: none; }
+        .top-right { top: 20px; right: 20px; border-left: none; border-bottom: none; }
+        .bottom-left { bottom: 20px; left: 20px; border-right: none; border-top: none; }
+        .bottom-right { bottom: 20px; right: 20px; border-left: none; border-top: none; }
+
+        .plasma-glow {
+            position: fixed; width: 45vw; height: 45vw; min-width: 300px;
+            background: radial-gradient(circle, rgba(255, 170, 0, 0.06) 0%, transparent 70%);
+            top: -10%; left: -10%; z-index: -2; filter: blur(100px); pointer-events: none;
+            animation: driftOne 25s ease-in-out infinite alternate;
+        }
+
+        @keyframes driftOne {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 40px) scale(1.1); }
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%; margin: 0 auto; padding: 8vh 24px; position: relative;
+        }
+    </style>
+    <style>
+        .main-header { text-align: center; margin-bottom: 60px; }
+
+        /* Фирменный белый глитч-заголовок */
+        .main-title {
+            font-family: 'Syncopate', sans-serif;
+            font-size: clamp(1.6rem, 3.8vw, 3rem);
+            font-weight: 700;
+            letter-spacing: clamp(6px, 1.5vw, 14px);
+            text-transform: uppercase;
+            color: var(--text-white);
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+            animation: whiteGlitch 4s step-end infinite;
+        }
+
+        @keyframes whiteGlitch {
+            0%, 92%, 100% { transform: skew(0deg); text-shadow: 0 0 15px rgba(255, 255, 255, 0.1); }
+            93% { transform: skew(3deg) translateX(-2px); text-shadow: 2px 0 0 var(--text-darker), -2px 0 0 #fff; }
+            95% { transform: skew(-2deg) translateX(3px); clip-path: inset(20% 0 40% 0); }
+            96% { transform: skew(0deg); clip-path: none; }
+            97% { transform: translateX(-3px); text-shadow: -1px 0 0 var(--text-darker); }
+            99% { transform: skew(1deg); clip-path: inset(60% 0 10% 0); }
+        }
+
+        .subtitle-block { margin-top: 25px; display: flex; flex-direction: column; gap: 6px; }
+        .random-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(0.65rem, 1.2vw, 0.78rem);
+            color: var(--text-darker); letter-spacing: 1.5px;
+        }
+
+        /* Настройка Bento-сетки для карточек услуг */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: clamp(20px, 3vw, 35px);
+            margin-bottom: 45px;
+        }
+
+        .section-headline {
+            font-family: 'Orbitron', sans-serif; color: var(--accent-amber);
+            font-size: 1.1rem; font-weight: 700; letter-spacing: 2px; margin-bottom: 25px;
+            text-transform: uppercase; border-bottom: 1px solid rgba(255, 170, 0, 0.15); padding-bottom: 8px;
+            grid-column: span 2;
+        }
+
+        .price-tag {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-amber);
+            font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-top: 12px;
+            display: inline-block;
+            text-shadow: 0 0 10px rgba(var(--accent-rgb), 0.2);
+        }
+
+        @media (max-width: 850px) {
+            .grid-layout { grid-template-columns: 1fr; }
+            .section-headline { grid-column: span 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="fx-canvas"></canvas>
+    <div class="screen-corner top-left"></div>
+    <div class="screen-corner top-right"></div>
+    <div class="screen-corner bottom-left"></div>
+    <div class="screen-corner bottom-right"></div>
+    <div class="plasma-glow"></div>
+
+    <main class="container">
+        <header class="main-header">
+            <h1 class="main-title">УСЛУГИ</h1>
+            <div class="subtitle-block">
+                <p class="random-text">// прейскурант цифровых решений студии</p>
+                <p class="random-text">// конфигурация цен: зафиксирована</p>
+            </div>
+        </header>
+
+        <!-- Bento-сетка направлений разработки -->
+        <section class="grid-layout">
+            <h2 class="section-headline">НАПРАВЛЕНИЯ РАЗРАБОТКИ</h2>
+            
+            <!-- Блок 1: Лендинги -->
+            <div class="interactive-card">
+                <div class="laser-line"></div>
+                <div class="card-shine"></div>
+                <div class="card-content">
+                    <div class="icon-wrapper">
+                        <span class="pulse-dot"></span>
+                        <span class="icon-glyph">💻</span>
+                    </div>
+                    <div class="text-wrapper">
+                        <h2 class="card-title">СОЗДАНИЕ ЛЕНДИНГОВ</h2>
+                        <p class="card-desc">Проектирование и разработка премиальных одностраничных сайтов на чистом коде под конкретные задачи.</p>
+                        <span class="price-tag">[ СТОИМОСТЬ: от 500 до 1 000 ₽ ]</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Блок 2: Портфолио -->
+            <div class="interactive-card">
+                <div class="laser-line"></div>
+                <div class="card-shine"></div>
+                <div class="card-content">
+                    <div class="icon-wrapper">
+                        <span class="pulse-dot"></span>
+                        <span class="icon-glyph">✨</span>
+                    </div>
+                    <div class="text-wrapper">
+                        <h2 class="card-title">РАЗРАБОТКА ПОРТФОЛИО</h2>
+                        <p class="card-desc">Создание стильных, интерактивных персональных хабов и сайтов-визиток для демонстрации ваших навыков и кейсов.</p>
+                        <span class="price-tag">[ СТОИМОСТЬ: от 700 до 1 400 ₽ ]</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Блок 3: Индивидуальный запрос -->
+            <div class="interactive-card">
+                <div class="laser-line"></div>
+                <div class="card-shine"></div>
+                <div class="card-content">
+                    <div class="icon-wrapper">
+                        <span class="pulse-dot"></span>
+                        <span class="icon-glyph">🛠️</span>
+                    </div>
+                    <div class="text-wrapper">
+                        <h2 class="card-title">ВАШ ИНДИВИДУАЛЬНЫЙ ЗАПРОС</h2>
+                        <p class="card-desc">Разработка любых нестандартных интерфейсов, скриптов, кастомных блоков или модулей по вашему техническому заданию.</p>
+                        <span class="price-tag">[ СТОИМОСТЬ: от 500 до 2 500 ₽ ]</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Блок 4: Интерактивный визуал -->
+            <div class="interactive-card">
+                <div class="laser-line"></div>
+                <div class="card-shine"></div>
+                <div class="card-content">
+                    <div class="icon-wrapper">
+                        <span class="pulse-dot"></span>
+                        <span class="icon-glyph">👁️</span>
+                    </div>
+                    <div class="text-wrapper">
+                        <h2 class="card-title">ИНТЕРАКТИВНЫЙ ВИЗУАЛ (CANVAS / JS)</h2>
+                        <p class="card-desc">Внедрение кастомных спецэффектов, живых фонов из частиц, анимаций и сложных математических микро-взаимодействий.</p>
+                        <span class="price-tag">[ СТОИМОСТЬ: от 300 до 2 000 ₽ ]</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Блок 5: Огромная карточка домена на всю ширину снизу -->
+            <div class="interactive-card wide-card">
+                <div class="laser-line"></div>
+                <div class="card-shine"></div>
+                <div class="card-content">
+                    <div class="icon-wrapper wide-icon">
+                        <span class="pulse-dot radar-glow"></span>
+                        <span class="icon-glyph">🌐</span>
+                    </div>
+                    <div class="text-wrapper">
+                        <h2 class="card-title">ПОСТАНОВКА САЙТА НА ДОМЕН</h2>
+                        <p class="card-desc">Развертывание готового проекта в сети, привязка к вашему имени и запуск готового интерфейса под ключ.</p>
+                        <span class="price-tag">[ СТОИМОСТЬ: 500 ₽ + домен ]</span>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Блок 2: Технические преимущества -->
+        <section class="benefits-layout">
+            <h2 class="section-headline">ТЕХНИЧЕСКИЕ ПРЕИМУЩЕСТВА</h2>
+            <div class="benefits-grid">
+                
+                <div class="benefit-item">
+                    <span class="benefit-label">ЧИСТЫЙ КОД:</span>
+                    <span class="benefit-val">Никаких тяжелых конструкторов и мусорных плагинов. Только оптимизированная производительность.</span>
+                </div>
+                
+                <div class="benefit-item">
+                    <span class="benefit-label">ЭКСТРЕМАЛЬНАЯ СКОРОСТЬ:</span>
+                    <span class="benefit-val">Время генерации и сборки готового интерфейса занимает от 1 часа до 2 дней.</span>
+                </div>
+                
+                <div class="benefit-item">
+                    <span class="benefit-label">МОМЕНТАЛЬНЫЕ ПРАВКИ:</span>
+                    <span class="benefit-val">Корректировка визуала, структуры и текстов происходит прямо в процессе разработки.</span>
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- Блок 3: Навигация -->
+        <a href="index.html" class="back-btn-card">
+            <span class="btn-laser"></span>
+            <span class="btn-text">⬅️ НА ГЛАВНУЮ ПАНЕЛЬ</span>
+        </a>
+    </main>
+    <!-- Стили оригинальных 3D-карточек, лазеров, ценников и преимуществ -->
+    <style>
+        .interactive-card {
+            background: var(--glass-core);
+            border: 1px solid var(--border-glow);
+            border-radius: clamp(16px, 2vw, 24px);
+            padding: clamp(24px, 3.5vw, 40px);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+            transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.2s ease;
+            transform-style: preserve-3d;
+            perspective: 1200px;
+            width: 100%;
+        }
+
+        .interactive-card:hover {
+            border-color: rgba(var(--accent-rgb), 0.5);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(var(--accent-rgb), 0.1);
+        }
+
+        .wide-card {
+            grid-column: span 2;
+            background: linear-gradient(135deg, rgba(15, 15, 22, 0.8) 0%, rgba(6, 6, 10, 0.75) 100%);
+            border: 1px solid rgba(255, 170, 0, 0.18);
+        }
+
+        .card-shine {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle 200px at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(var(--accent-rgb), 0.18), transparent 80%);
+            z-index: 1; pointer-events: none; opacity: 0; transition: opacity 0.3s ease;
+        }
+
+        .laser-line {
+            position: absolute;
+            top: 0; left: -100%; width: 40%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(var(--accent-rgb), 0.15), transparent);
+            transform: skewX(-20deg); z-index: 1;
+        }
+
+        .interactive-card:hover .card-shine { opacity: 1; }
+        .interactive-card:hover .laser-line {
+            left: 160%;
+            transition: left 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .card-content {
+            display: flex;
+            align-items: center;
+            gap: clamp(20px, 2.5vw, 30px);
+            z-index: 2; transform: translateZ(50px); width: 100%;
+        }
+
+        .icon-wrapper {
+            width: clamp(54px, 6vw, 70px); height: clamp(54px, 6vw, 70px);
+            background: rgba(255, 170, 0, 0.02); border: 1px solid rgba(255, 170, 0, 0.12);
+            border-radius: clamp(12px, 1.5vw, 18px);
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+            position: relative; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .wide-icon {
+            background: rgba(var(--accent-rgb), 0.05); border-color: rgba(var(--accent-rgb), 0.3);
+        }
+
+        .icon-glyph { font-size: clamp(1.4rem, 2vw, 1.8rem); transition: transform 0.4s ease; }
+
+        .pulse-dot {
+            position: absolute; top: clamp(4px, 0.8vw, 8px); right: clamp(4px, 0.8vw, 8px);
+            width: 6px; height: 6px; background-color: var(--accent-amber);
+            border-radius: 50%; box-shadow: 0 0 8px var(--accent-amber);
+        }
+
+        .radar-glow {
+            width: 8px; height: 8px;
+            animation: radarPulse 2s infinite ease-in-out;
+        }
+
+        @keyframes radarPulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0.7); }
+            70% { transform: scale(1.5); box-shadow: 0 0 0 10px rgba(var(--accent-rgb), 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0); }
+        }
+
+        .interactive-card:hover .icon-wrapper {
+            background: rgba(var(--accent-rgb), 0.15); border-color: var(--accent-amber);
+            box-shadow: 0 0 25px rgba(var(--accent-rgb), 0.4);
+        }
+
+        .interactive-card:hover .icon-glyph { transform: scale(1.1) rotate(-5deg); }
+        .text-wrapper { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+
+        .card-title {
+            color: var(--text-white); font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+            font-weight: 700; letter-spacing: 1.5px; font-family: 'Orbitron', sans-serif;
+            transition: color 0.3s ease;
+        }
+
+        .interactive-card:hover .card-title {
+            color: var(--accent-amber); text-shadow: 0 0 15px rgba(var(--accent-rgb), 0.3);
+        }
+
+        .card-desc {
+            color: #e2e2eb; font-size: clamp(0.8rem, 1.2vw, 0.88rem); line-height: 1.45; font-weight: 400; transition: color 0.3s ease;
+        }
+
+        .interactive-card:hover .card-desc { color: rgba(255, 255, 255, 1); }
+
+        /* Стили блока технических преимуществ */
+        .benefits-layout { display: flex; flex-direction: column; gap: 20px; width: 100%; margin-top: 20px; }
+        .benefits-grid { display: flex; flex-direction: column; gap: 16px; background: var(--glass-core); border: 1px solid var(--border-glow); border-radius: 20px; padding: clamp(24px, 4vw, 40px); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); }
+        .benefit-item { line-height: 1.5; font-size: clamp(0.85rem, 1.3vw, 0.95rem); }
+        .benefit-label { font-family: 'JetBrains Mono', monospace; color: var(--accent-amber); font-weight: 700; }
+        .benefit-val { color: #e2e2eb; }
+
+        /* Хай-тек кнопка возврата назад */
+        .back-btn-card {
+            margin-top: 30px; background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; padding: 20px; text-decoration: none; text-align: center; position: relative; overflow: hidden; display: block; transition: all 0.3s ease;
+        }
+        .back-btn-card:hover { background: rgba(255, 170, 0, 0.02); border-color: rgba(var(--accent-rgb), 0.3); box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.05); }
+        .btn-text { color: #70707a; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; font-weight: 700; letter-spacing: 2px; transition: color 0.3s; }
+        .back-btn-card:hover .btn-text { color: var(--text-white); }
+        .btn-laser { position: absolute; top: 0; left: -100%; width: 30%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent); transform: skewX(-20deg); }
+        .back-btn-card:hover .btn-laser { left: 140%; transition: left 0.7s ease; }
+
+        @media (max-width: 850px) {
+            .wide-card { grid-column: span 1; }
+            .interactive-card { transform: none !important; transition: background 0.2s, border-color 0.2s; }
+            .interactive-card:active { background: rgba(var(--accent-rgb), 0.05); border-color: rgba(var(--accent-rgb), 0.4); }
+        }
+    </style>
+    <!-- Скрипты: Холст частиц, 3D наклон и подсветка прицелов -->
+    <script>
+        // --- Матрица частиц на Canvas ---
+        const canvas = document.getElementById('fx-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let particlesArray = [];
+        const maxParticles = 90; 
+        const mouse = { x: null, y: null, radius: 180 };
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX; mouse.y = e.clientY;
+        });
+        window.addEventListener('mouseout', () => {
+            mouse.x = null; mouse.y = null;
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.6; this.speedY = (Math.random() - 0.5) * 0.6;
+            }
+            update() {
+                this.x += this.speedX; this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+
+                if (mouse.x != null && mouse.y != null) {
+                    let dx = mouse.x - this.x; let dy = mouse.y - this.y;
+                    let distance = Math.hypot(dx, dy);
+                    if (distance < mouse.radius) {
+                        let force = (mouse.radius - distance) / mouse.radius;
+                        this.x -= (dx / distance) * force * 3; this.y -= (dy / distance) * force * 3;
+                    }
+                }
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(255, 170, 0, 0.4)'; ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            for (let i = 0; i < maxParticles; i++) { particlesArray.push(new Particle()); }
+        }
+        initParticles();
+
+        function connectParticles() {
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    let dx = particlesArray[a].x - particlesArray[b].x;
+                    let dy = particlesArray[a].y - particlesArray[b].y;
+                    let distance = Math.hypot(dx, dy);
+                    if (distance < 110) {
+                        let opacity = (1 - (distance / 110)) * 0.12;
+                        ctx.strokeStyle = `rgba(255, 170, 0, ${opacity})`; ctx.lineWidth = 1;
+                        ctx.beginPath(); ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y); ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update(); particlesArray[i].draw();
+            }
+            connectParticles(); requestAnimationFrame(animate);
+        }
+        animate();
+
+        // --- Интерактивный 3D-наклон, Блики и Подсветка прицелов ---
+        const cards = document.querySelectorAll('.interactive-card');
+        const corners = document.querySelectorAll('.screen-corner');
+
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                corners.forEach(corner => {
+                    corner.style.borderColor = 'rgba(var(--accent-rgb), 0.8)';
+                    corner.style.filter = 'drop-shadow(0 0 8px rgba(var(--accent-rgb), 0.5))';
+                });
+
+                if (window.innerWidth <= 850) return; 
+                const rect = card.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left; const mouseY = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${mouseX}px`); card.style.setProperty('--mouse-y', `${mouseY}px`);
+                
+                const x = mouseX - (rect.width / 2); const y = mouseY - (rect.height / 2);
+                const degX = (y / (rect.height / 2)) * -6; const degY = (x / (rect.width / 2)) * 6;
+                card.style.transform = `perspective(1200px) translateY(-4px) rotateX(${degX}deg) rotateY(${degY}deg)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1200px) translateY(0) rotateX(0) rotateY(0)';
+                corners.forEach(corner => {
+                    corner.style.borderColor = 'rgba(var(--accent-rgb), 0.2)'; corner.style.filter = 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
