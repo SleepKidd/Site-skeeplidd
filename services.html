@@ -88,8 +88,7 @@
             max-width: 1200px;
             width: 100%; margin: 0 auto; padding: 8vh 24px; position: relative;
         }
-    </style>
-    <style>
+
         .main-header { text-align: center; margin-bottom: 60px; }
 
         /* Фирменный белый глитч-заголовок */
@@ -121,7 +120,6 @@
             font-size: clamp(0.65rem, 1.2vw, 0.78rem);
             color: var(--text-darker); letter-spacing: 1.5px;
         }
-
         /* Настройка Bento-сетки для карточек услуг */
         .grid-layout {
             display: grid;
@@ -152,147 +150,7 @@
             .grid-layout { grid-template-columns: 1fr; }
             .section-headline { grid-column: span 1; }
         }
-    </style>
-</head>
-<body>
 
-    <canvas id="fx-canvas"></canvas>
-    <div class="screen-corner top-left"></div>
-    <div class="screen-corner top-right"></div>
-    <div class="screen-corner bottom-left"></div>
-    <div class="screen-corner bottom-right"></div>
-    <div class="plasma-glow"></div>
-
-    <main class="container">
-        <header class="main-header">
-            <h1 class="main-title">УСЛУГИ</h1>
-            <div class="subtitle-block">
-                <p class="random-text">// прейскурант цифровых решений студии</p>
-                <p class="random-text">// конфигурация цен: зафиксирована</p>
-            </div>
-        </header>
-
-        <!-- Bento-сетка направлений разработки -->
-        <section class="grid-layout">
-            <h2 class="section-headline">НАПРАВЛЕНИЯ РАЗРАБОТКИ</h2>
-            
-            <!-- Блок 1: Лендинги -->
-            <div class="interactive-card">
-                <div class="laser-line"></div>
-                <div class="card-shine"></div>
-                <div class="card-content">
-                    <div class="icon-wrapper">
-                        <span class="pulse-dot"></span>
-                        <span class="icon-glyph">💻</span>
-                    </div>
-                    <div class="text-wrapper">
-                        <h2 class="card-title">СОЗДАНИЕ ЛЕНДИНГОВ</h2>
-                        <p class="card-desc">Проектирование и разработка премиальных одностраничных сайтов на чистом коде под конкретные задачи.</p>
-                        <span class="price-tag">[ СТОИМОСТЬ: от 500 до 1 000 ₽ ]</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Блок 2: Портфолио -->
-            <div class="interactive-card">
-                <div class="laser-line"></div>
-                <div class="card-shine"></div>
-                <div class="card-content">
-                    <div class="icon-wrapper">
-                        <span class="pulse-dot"></span>
-                        <span class="icon-glyph">✨</span>
-                    </div>
-                    <div class="text-wrapper">
-                        <h2 class="card-title">РАЗРАБОТКА ПОРТФОЛИО</h2>
-                        <p class="card-desc">Создание стильных, интерактивных персональных хабов и сайтов-визиток для демонстрации ваших навыков и кейсов.</p>
-                        <span class="price-tag">[ СТОИМОСТЬ: от 700 до 1 400 ₽ ]</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Блок 3: Индивидуальный запрос -->
-            <div class="interactive-card">
-                <div class="laser-line"></div>
-                <div class="card-shine"></div>
-                <div class="card-content">
-                    <div class="icon-wrapper">
-                        <span class="pulse-dot"></span>
-                        <span class="icon-glyph">🛠️</span>
-                    </div>
-                    <div class="text-wrapper">
-                        <h2 class="card-title">ВАШ ИНДИВИДУАЛЬНЫЙ ЗАПРОС</h2>
-                        <p class="card-desc">Разработка любых нестандартных интерфейсов, скриптов, кастомных блоков или модулей по вашему техническому заданию.</p>
-                        <span class="price-tag">[ СТОИМОСТЬ: от 500 до 2 500 ₽ ]</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Блок 4: Интерактивный визуал -->
-            <div class="interactive-card">
-                <div class="laser-line"></div>
-                <div class="card-shine"></div>
-                <div class="card-content">
-                    <div class="icon-wrapper">
-                        <span class="pulse-dot"></span>
-                        <span class="icon-glyph">👁️</span>
-                    </div>
-                    <div class="text-wrapper">
-                        <h2 class="card-title">ИНТЕРАКТИВНЫЙ ВИЗУАЛ (CANVAS / JS)</h2>
-                        <p class="card-desc">Внедрение кастомных спецэффектов, живых фонов из частиц, анимаций и сложных математических микро-взаимодействий.</p>
-                        <span class="price-tag">[ СТОИМОСТЬ: от 300 до 2 000 ₽ ]</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Блок 5: Огромная карточка домена на всю ширину снизу -->
-            <div class="interactive-card wide-card">
-                <div class="laser-line"></div>
-                <div class="card-shine"></div>
-                <div class="card-content">
-                    <div class="icon-wrapper wide-icon">
-                        <span class="pulse-dot radar-glow"></span>
-                        <span class="icon-glyph">🌐</span>
-                    </div>
-                    <div class="text-wrapper">
-                        <h2 class="card-title">ПОСТАНОВКА САЙТА НА ДОМЕН</h2>
-                        <p class="card-desc">Развертывание готового проекта в сети, привязка к вашему имени и запуск готового интерфейса под ключ.</p>
-                        <span class="price-tag">[ СТОИМОСТЬ: 250 ₽ + домен ]</span>
-                    </div>
-                </div>
-            </div>
-
-        </section>
-
-        <!-- Блок 2: Технические преимущества -->
-        <section class="benefits-layout">
-            <h2 class="section-headline">ТЕХНИЧЕСКИЕ ПРЕИМУЩЕСТВА</h2>
-            <div class="benefits-grid">
-                
-                <div class="benefit-item">
-                    <span class="benefit-label">ЧИСТЫЙ КОД:</span>
-                    <span class="benefit-val">Никаких тяжелых конструкторов и мусорных плагинов. Только оптимизированная производительность.</span>
-                </div>
-                
-                <div class="benefit-item">
-                    <span class="benefit-label">ЭКСТРЕМАЛЬНАЯ СКОРОСТЬ:</span>
-                    <span class="benefit-val">Время создания  и сборки готового интерфейса занимает от 1 часа до 2 дней.</span>
-                </div>
-                
-                <div class="benefit-item">
-                    <span class="benefit-label">МОМЕНТАЛЬНЫЕ ПРАВКИ:</span>
-                    <span class="benefit-val">Корректировка визуала, структуры и текстов происходит прямо в процессе разработки.</span>
-                </div>
-                
-            </div>
-        </section>
-
-        <!-- Блок 3: Навигация -->
-        <a href="index.html" class="back-btn-card">
-            <span class="btn-laser"></span>
-            <span class="btn-text">⬅️ НА ГЛАВНУЮ ПАНЕЛЬ</span>
-        </a>
-    </main>
-    <!-- Стили оригинальных 3D-карточек, лазеров, ценников и преимуществ -->
-    <style>
         .interactive-card {
             background: var(--glass-core);
             border: 1px solid var(--border-glow);
@@ -398,7 +256,6 @@
         .interactive-card:hover .card-title {
             color: var(--accent-amber); text-shadow: 0 0 15px rgba(var(--accent-rgb), 0.3);
         }
-
         .card-desc {
             color: #e2e2eb; font-size: clamp(0.8rem, 1.2vw, 0.88rem); line-height: 1.45; font-weight: 400; transition: color 0.3s ease;
         }
@@ -428,7 +285,145 @@
             .interactive-card:active { background: rgba(var(--accent-rgb), 0.05); border-color: rgba(var(--accent-rgb), 0.4); }
         }
     </style>
-    <!-- Скрипты: Холст частиц, 3D наклон и подсветка прицелов -->
+</head>
+<body>
+
+    <canvas id="fx-canvas"></canvas>
+    <div class="screen-corner top-left"></div>
+    <div class="screen-corner top-right"></div>
+    <div class="screen-corner bottom-left"></div>
+    <div class="screen-corner bottom-right"></div>
+    <div class="plasma-glow"></div>
+
+    <main class="container">
+        <header class="main-header">
+            <h1 class="main-title">УСЛУГИ</h1>
+            <div class="subtitle-block">
+                <p class="random-text">// прейскурант цифровых решений студии</p>
+                <p class="random-text">// конфигурация цен: зафиксирована</p>
+            </div>
+        </header>
+
+        <!-- Bento-сетка направлений разработки с новыми ценами студии -->
+        <section class="grid-layout">
+            <h2 class="section-headline">НАПРАВЛЕНИЯ РАЗРАБОТКИ</h2>
+            
+            <!-- Блок 1: Сайты -->
+            <div class="interactive-card">
+                <div class="laser-line"></div>
+                <div class="card-shine"></div>
+                <div class="card-content">
+                    <div class="icon-wrapper">
+                        <span class="pulse-dot"></span>
+                        <span class="icon-glyph">💻</span>
+                    </div>
+                    <div class="text-wrapper">
+                        <h2 class="card-title">РАЗРАБОТКА САЙТОВ</h2>
+                        <p class="card-desc">Проектирование и создание современных адаптивных сайтов на чистом коде: от простых лендингов и портфолио до многостраничных систем.</p>
+                        <span class="price-tag">[ СТОИМОСТЬ: от 250 ₽ ]</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Блок 2: ТГ Боты -->
+            <div class="interactive-card">
+                <div class="laser-line"></div>
+                <div class="card-shine"></div>
+                <div class="card-content">
+                    <div class="icon-wrapper">
+                        <span class="pulse-dot"></span>
+                        <span class="icon-glyph">🤖</span>
+                    </div>
+                    <div class="text-wrapper">
+                        <h2 class="card-title">ТЕЛЕГРАМ БОТЫ</h2>
+                        <p class="card-desc">Программирование умных ботов на архитектуре Aiogram: системы сбора заявок, опросы, формы обратной связи и интеграция с вашим сайтом.</p>
+                        <span class="price-tag">[ СТОИМОСТЬ: от 100 ₽ ]</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Блок 3: Скрипты и эффекты -->
+            <div class="interactive-card">
+                <div class="laser-line"></div>
+                <div class="card-shine"></div>
+                <div class="card-content">
+                    <div class="icon-wrapper">
+                        <span class="pulse-dot"></span>
+                        <span class="icon-glyph">⚙️</span>
+                    </div>
+                    <div class="text-wrapper">
+                        <h2 class="card-title">СКРИПТЫ И ЭФФЕКТЫ</h2>
+                        <p class="card-desc">Внедрение кастомных спецэффектов, живых фонов из частиц, анимаций, эффектов стекла и сложных микро-взаимодействий на JS.</p>
+                        <span class="price-tag">[ СТОИМОСТЬ: от 300 ₽ ]</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Блок 4: Индивидуальный запрос -->
+            <div class="interactive-card">
+                <div class="laser-line"></div>
+                <div class="card-shine"></div>
+                <div class="card-content">
+                    <div class="icon-wrapper">
+                        <span class="pulse-dot"></span>
+                        <span class="icon-glyph">🛠️</span>
+                    </div>
+                    <div class="text-wrapper">
+                        <h2 class="card-title">ИНДИВИДУАЛЬНЫЙ ЗАПРОС</h2>
+                        <p class="card-desc">Разработка любых нестандартных интерфейсов, кастомных блоков, скриптов или модулей строго по вашему техническому заданию.</p>
+                        <span class="price-tag">[ СТОИМОСТЬ: индивидуально ]</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Блок 5: Огромная карточка-кнопка калькулятора на всю ширину снизу -->
+            <a href="https://t.me" target="_blank" class="interactive-card wide-card">
+                <div class="laser-line"></div>
+                <div class="card-shine"></div>
+                <div class="card-content" style="border: 1px solid rgba(255, 170, 0, 0.3); background: rgba(255, 170, 0, 0.02);">
+                    <div class="icon-wrapper wide-icon">
+                        <span class="pulse-dot radar-glow"></span>
+                        <span class="icon-glyph">📊</span>
+                    </div>
+                    <div class="text-wrapper">
+                        <h2 class="card-title" style="color: var(--accent-amber);">📊 РАССЧИТАТЬ СТОИМОСТЬ ПРОЕКТА</h2>
+                        <p class="card-desc" style="color: #fff; font-weight: 700;">[ НАЖМИТЕ ДЛЯ ПЕРЕХОДА В МЕНЕДЖЕР ТЕЛЕГРАМ ]</p>
+                        <p class="card-desc">Запустите нашего официального бота <b>@ReviewsStudioBot</b>. Интерактивный калькулятор за 5 простых вопросов автоматически рассчитает точную смету и сроки вашего ТЗ.</p>
+                    </div>
+                </div>
+            </a>
+
+        </section>
+        <!-- Блок технических преимуществ -->
+        <section class="benefits-layout">
+            <h2 class="section-headline">ТЕХНИЧЕСКИЕ ПРЕИМУЩЕСТВА</h2>
+            <div class="benefits-grid">
+                
+                <div class="benefit-item">
+                    <span class="benefit-label">ЧИСТЫЙ КОД:</span>
+                    <span class="benefit-val">Никаких тяжелых конструкторов и мусорных плагинов. Только оптимизированная производительность.</span>
+                </div>
+                
+                <div class="benefit-item">
+                    <span class="benefit-label">ЭКСТРЕМАЛЬНАЯ СКОРОСТЬ:</span>
+                    <span class="benefit-val">Время создания и сборки готового интерфейса занимает от 1 часа до 2 дней.</span>
+                </div>
+                
+                <div class="benefit-item">
+                    <span class="benefit-label">МОМЕНТАЛЬНЫЕ ПРАВКИ:</span>
+                    <span class="benefit-val">Корректировка визуала, структуры и текстов происходит прямо в процессе разработки.</span>
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- Навигация -->
+        <a href="index.html" class="back-btn-card">
+            <span class="btn-laser"></span>
+            <span class="btn-text">⬅️ НА ГЛАВНУЮ ПАНЕЛЬ</span>
+        </a>
+    </main>
+
     <script>
         // --- Матрица частиц на Canvas ---
         const canvas = document.getElementById('fx-canvas');
